@@ -1,6 +1,7 @@
 "use client";
 import Link from 'next/link';
 import { Palette, Ruler, Smile, Truck } from 'lucide-react';
+import { CONTACT_CONFIG } from '../constants';
 
 const features=[
     {
@@ -28,6 +29,8 @@ const features=[
 
 
 export default function CustomFigure(){
+    const whatsappUrl = CONTACT_CONFIG.whatsapp.getLink();
+
     return(
         <section className="md:py-24 text-white px-4 ">
             <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -43,7 +46,7 @@ export default function CustomFigure(){
                     </p>
                     
                     <div className='flex flex-col sm:flex-row gap-3 pt-3'>
-                        <a href="https://wa.me/573215410482?text=Hola%20Cowboy%20Studio!%20Quiero%20crear%20una%20figura%203D%20personalizada.%20¿Me%20pueden%20dar%20más%20información?" target="_blank" rel="noopener noreferrer" className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg font-medium text-center hover:shadow-[0_0_20px_rgba(251,146,60,0.4)] transition-all duration-300 w-fit">
+                        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg font-medium text-center hover:shadow-[0_0_20px_rgba(251,146,60,0.4)] transition-all duration-300 w-fit">
                             Solicitar por WhatsApp →
                         </a>
                         <Link href="/catalog" className="px-6 py-2.5 border border-amber-400 text-amber-400 rounded-lg font-medium hover:bg-amber-400/10 transition-colors text-center w-fit">
