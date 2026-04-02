@@ -4,11 +4,13 @@ import Categories from '@/components/home/Categories';
 import CatalogoCTA from '@/components/home/CatalogCTA';
 import CustomFigure from '@/components/home/CustomFigure';
 import Process from '@/components/home/Process';
+import Products from "@/components/home/Products";
 
 export default function Home() {
   return (
     <main className="bg-[#0b0c10] min-h-screen">
       <Hero/>
+      <Products/>
       <Categories/>
       <section className="bg-[#0a0f1e] py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
