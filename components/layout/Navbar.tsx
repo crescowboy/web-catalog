@@ -1,5 +1,6 @@
 "use client";
 import { Heart } from "lucide-react";
+import Link from 'next/link';
 
 export default function Navbar() {
     return (
@@ -27,12 +28,12 @@ export default function Navbar() {
                     </a>
                 </div>
         
-                <div className="relative flex items-center group cursor-pointer">
+                <Link href ="/favorites" className="relative flex items-center group cursor-pointer">
                     <Heart className="w-6 h-6 text-transparent fill-red-500 transition-all duration-300 group-hover:scale-110 group-hover:fill-orange-500" />
                         <span className="absolute -top-1 -right-1 bg-gradient-to-r from-orange-400 to-red-500 text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center text-black shadow-md">
                             2
                         </span>
-                </div>
+                </Link>
             </div>
         </div>
     </nav>
