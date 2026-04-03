@@ -1,4 +1,3 @@
-"use client";
 import Link from 'next/link';
 import { Bird, Camera, SquarePlay,MessageSquare } from "lucide-react";
 

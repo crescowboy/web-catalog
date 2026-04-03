@@ -1,8 +1,8 @@
-"use client";
+
 import Image from "next/image";
 import { Star, Heart,Ruler,Palette} from 'lucide-react';
 import Link from 'next/link';
-import { Product } from '@/data/products';
+import { Product } from '@/types/product';
 
 export default function ProductCard({ info }: { info: Product }){
     return(
@@ -37,7 +37,7 @@ export default function ProductCard({ info }: { info: Product }){
                     <Ruler className="w-4 h-4 text-orange-500/70" /> {info.size}
                 </span>
                 <span className="flex items-center gap-2">
-                    <Palette className="w-4 h-4 text-orange-500/70" /> {info.colors}
+                    <Palette className="w-4 h-4 text-orange-500/70" /> {info.colors.length} {info.colors.length === 1 ? 'color' : 'colores'}
                 </span>
             </div>
 
@@ -45,9 +45,9 @@ export default function ProductCard({ info }: { info: Product }){
                 <span className="text-3xl font-bold text-orange-500 tracking-tighter">
                     {info.price}
                 </span>
-                <Link href="/details" className="bg-gradient-to-br from-orange-500 to-red-600 px-5 py-2 rounded-lg text-white font-bold flex items-center gap-2 hover:brightness-110 hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all active:scale-95">
+                <Link href={`/details/${info.id}`} className="bg-gradient-to-br from-orange-500 to-red-600 px-5 py-2 rounded-lg text-white font-bold flex items-center gap-2 hover:brightness-110 hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all active:scale-95">
                     Ver <span className="text-lg">→</span>
-                 </Link>
+                </Link>
             </div>
         </div>
     );
