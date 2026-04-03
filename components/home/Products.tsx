@@ -1,7 +1,5 @@
-"use client";
-
 import { featuredProducts } from '@/data/products';
-import ProductCard from '../ProductCard';
+import ProductCard from '../products/ProductCard';
 
 
 export default function Products(){
