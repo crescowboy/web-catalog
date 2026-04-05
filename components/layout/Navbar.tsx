@@ -1,7 +1,12 @@
+"use client";
 import { Heart } from "lucide-react";
 import Link from 'next/link';
+import { useFavorites } from '@/context/FavoritesContext';
 
 export default function Navbar() {
+    
+    const { favorites } = useFavorites();
+
     return (
     <nav className="bg-[#010318]/85 backdrop-blur-md shadow-lg sticky top-0 z-50">
         <div className="max-w-[1200px] mx-auto flex items-center justify-between px-8 py-4">
@@ -30,7 +35,7 @@ export default function Navbar() {
                 <Link href ="/favorites" className="relative flex items-center group cursor-pointer">
                     <Heart className="w-6 h-6 text-transparent fill-red-500 transition-all duration-300 group-hover:scale-110 group-hover:fill-orange-500" />
                         <span className="absolute -top-1 -right-1 bg-gradient-to-r from-orange-400 to-red-500 text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center text-black shadow-md">
-                            2
+                            {favorites.length}
                         </span>
                 </Link>
             </div>
