@@ -1,5 +1,3 @@
-"use client";
-
 import { featuredProducts } from '@/data/products';
 import ProductCard from '../ProductCard';
 

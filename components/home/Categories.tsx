@@ -1,4 +1,3 @@
-"use client";
 import { Sparkles, Clapperboard, Tv, ArrowRight } from "lucide-react";
 import Link from 'next/link';
 

@@ -1,4 +1,3 @@
-"use client";
 import Link from 'next/link';
 import { Palette, Ruler, Smile, Truck } from 'lucide-react';
 import { CONTACT_CONFIG } from '../constants';
