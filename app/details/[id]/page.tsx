@@ -1,8 +1,14 @@
+"use client";
+
 import React from 'react'; 
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { featuredProducts } from '@/data/products';
+import ProductImage from '@/components/products/ProductImage';
+import { CONTACT_CONFIG } from '@/components/constants';
+import { useFavorites } from '@/context/FavoritesContext'
+import RelatedProductCard from '@/components/products/RelatedProductCard';
 
 interface PageProps {
   params: { id: string }; 
@@ -16,6 +22,23 @@ export default function ProductDetailPage({ params }: PageProps) {
   if (!product) {
     notFound();
   }
+  
+  const { toggleFavorite , isFavorite} = useFavorites();
+  const isFav = isFavorite(product.id);
+
+
+  const sameSubCategory = featuredProducts.filter((p) => 
+    p.subCategory === product.subCategory && p.id !== product.id
+  );
+
+  const sameCategory = featuredProducts.filter((p) => 
+    p.category === product.category && 
+    p.subCategory !== product.subCategory && 
+    p.id !== product.id
+  );
+
+  
+  const relatedProducts = [...sameSubCategory, ...sameCategory].slice(0, 4);
 
   return (
     
@@ -29,18 +52,12 @@ export default function ProductDetailPage({ params }: PageProps) {
       </nav>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
-        
+      
         <div className="flex flex-col gap-4">
-          <div className="bg-[#10172a] p-8 rounded-3xl shadow-2xl flex justify-center items-center aspect-square overflow-hidden border border-gray-800">
-            <Image 
-              src={product.image} 
-              alt={`Amigurumi de ${product.name}`}
-              width={600}
-              height={600}
-              className="object-contain w-full h-auto"
-              priority 
-            />
-          </div>
+          <ProductImage
+            images={product.images || [product.image]} 
+            name={product.name} 
+          />
         </div>
 
         
@@ -100,8 +117,81 @@ export default function ProductDetailPage({ params }: PageProps) {
               ))}
             </div>
           </div>
+
+          
+          <div className="flex flex-col gap-4 mt-6">
+            <div className="w-full bg-[#061a14] text-[#4ade80] py-3 rounded-lg border border-[#166534]/30 flex justify-center items-center gap-2 text-sm font-medium">
+              <span>✓</span> En stock
+            </div>
+
+          <Link 
+            href={CONTACT_CONFIG.whatsapp.getLink(product.name, product.category)}
+            target="_blank"
+            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#f59e0b] via-[#ea580c] to-[#dc2626] text-white py-4 rounded-xl font-bold hover:opacity-90 transition-all shadow-lg shadow-orange-950/20"
+          >
+            <span className="text-xl">💬</span>
+                Contactar por WhatsApp
+          </Link>
+          
+          <button 
+            onClick={() => toggleFavorite(product)} 
+            className={`w-full py-4 rounded-xl font-bold border flex items-center justify-center gap-2 transition-all shadow-lg ${
+            isFav 
+              ? "bg-orange-500/10 border-orange-500 text-orange-500" 
+              : "border-[#f59e0b] text-[#f59e0b] hover:bg-[#f59e0b]/5 shadow-[0_0_15px_rgba(245,158,11,0.1)]" 
+            } `}
+          >
+            <span className="text-xl">
+              {isFav ? '❤️' : '♡'}
+            </span>
+              {isFav ? 'Quitar de favoritos' : 'Añadir a favoritos'}
+          </button>
+          
+          <Link href="/catalog" className="text-center text-gray-400 text-sm hover:text-white transition-colors py-2">
+            ← Volver al catálogo
+          </Link>
+          
+          <div className="mt-4 bg-[#0f172a]/40 border border-gray-800 rounded-2xl p-6 space-y-3">
+            <h4 className="text-[#60a5fa] font-bold flex items-center gap-2 text-sm">
+              <span className="bg-[#1e293b] p-1 rounded-md">ℹ️</span> Información
+            </h4>
+            <ul className="text-gray-400 text-xs space-y-2.5 leading-relaxed">
+              <li className="flex items-start gap-2">
+                <span className="text-gray-500">✓</span>
+                  Envío gratis en pedidos mayores a $100
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-gray-500">✓</span>
+                  Empaque seguro
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-gray-500">✓</span>
+                  Tiempo de producción: 2-5 días hábiles
+              </li>
+            </ul>
+          </div>
+        </div>
         </div>
       </div>
+
+      {relatedProducts.length > 0 && (
+        <section className="max-w-7xl mx-auto mt-20 pt-10 border-t border-gray-800/50">
+          <div className="flex flex-col items-center mb-10">
+          
+            <h2 className="text-3xl md:text-4xl font-extrabold text-center bg-gradient-to-r from-[#ffea00] to-[#ff4e00] text-transparent bg-clip-text inline-block">
+              Más en {product.category.toLowerCase()}
+            </h2>
+            <div className="h-1 w-20 bg-orange-500 mt-2 rounded-full"></div>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+            {relatedProducts.map((related) => (
+              <RelatedProductCard key={related.id} product={related} />
+            ))}
+          </div>
+        </section>
+      )}
+      
     </main>
   );
 }
