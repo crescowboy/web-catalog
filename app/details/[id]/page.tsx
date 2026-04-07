@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react'; 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -5,6 +7,8 @@ import { notFound } from 'next/navigation';
 import { featuredProducts } from '@/data/products';
 import ProductImage from '@/components/products/ProductImage';
 import { CONTACT_CONFIG } from '@/components/constants';
+import { useFavorites } from '@/context/FavoritesContext';
+import RelatedProductCard from '@/components/products/RelatedProductCard';
 
 
 interface PageProps {
@@ -19,6 +23,23 @@ export default function ProductDetailPage({ params }: PageProps) {
   if (!product) {
     notFound();
   }
+  
+  const { toggleFavorite , isFavorite} = useFavorites();
+  const isFav = isFavorite(product.id);
+
+
+  const sameSubCategory = featuredProducts.filter((p) => 
+    p.subCategory === product.subCategory && p.id !== product.id
+  );
+
+  const sameCategory = featuredProducts.filter((p) => 
+    p.category === product.category && 
+    p.subCategory !== product.subCategory && 
+    p.id !== product.id
+  );
+
+  
+  const relatedProducts = [...sameSubCategory, ...sameCategory].slice(0, 4);
 
   return (
     
@@ -31,15 +52,18 @@ export default function ProductDetailPage({ params }: PageProps) {
         <span className="text-orange-400 font-medium">{product.name}</span>
       </nav>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-1
+
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
+      
         <div className="flex flex-col gap-4">
           <ProductImage
             images={product.images || [product.image]} 
             name={product.name} 
           />
-         </div> 
-                      
-          <div className="flex flex-col gap-y-6">
+        </div>
+
+        
+        <div className="flex flex-col gap-y-6">
           <div className="flex justify-between items-center">
             <span className="bg-orange-950 text-orange-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
               {product.category}
@@ -110,10 +134,20 @@ export default function ProductDetailPage({ params }: PageProps) {
             <span className="text-xl">💬</span>
                 Contactar por WhatsApp
           </Link>
-          
-          <button className="w-full py-4 rounded-xl font-bold border border-[#f59e0b] text-[#f59e0b] flex items-center justify-center gap-2 hover:bg-[#f59e0b]/5 transition-all shadow-[0_0_15px_rgba(245,158,11,0.1)]">
-            <span className="text-xl">♡</span>
-              Añadir a favoritos
+
+          <button 
+            onClick={() => toggleFavorite(product)} 
+            className={`w-full py-4 rounded-xl font-bold border flex items-center justify-center gap-2 transition-all shadow-lg ${
+            isFav 
+              ? "bg-orange-500/10 border-orange-500 text-orange-500" 
+              : "border-[#f59e0b] text-[#f59e0b] hover:bg-[#f59e0b]/5 shadow-[0_0_15px_rgba(245,158,11,0.1)]" 
+            } `}
+          >
+            <span className="text-xl">
+              {isFav ? '❤️' : '♡'}
+            </span>
+              {isFav ? 'Quitar de favoritos' : 'Añadir a favoritos'}
+
           </button>
           
           <Link href="/catalog" className="text-center text-gray-400 text-sm hover:text-white transition-colors py-2">
@@ -138,10 +172,29 @@ export default function ProductDetailPage({ params }: PageProps) {
                   Tiempo de producción: 2-5 días hábiles
               </li>
             </ul>
-          </div>
-        </div>
+           </div>
+         </div>
        </div>
       </div>
+
+      {relatedProducts.length > 0 && (
+        <section className="max-w-7xl mx-auto mt-20 pt-10 border-t border-gray-800/50">
+          <div className="flex flex-col items-center mb-10">
+          
+            <h2 className="text-3xl md:text-4xl font-extrabold text-center bg-gradient-to-r from-[#ffea00] to-[#ff4e00] text-transparent bg-clip-text inline-block">
+              Más en {product.category.toLowerCase()}
+            </h2>
+            <div className="h-1 w-20 bg-orange-500 mt-2 rounded-full"></div>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+            {relatedProducts.map((related) => (
+              <RelatedProductCard key={related.id} product={related} />
+            ))}
+          </div>
+        </section>
+      )}
+      
     </main>
   );
 }

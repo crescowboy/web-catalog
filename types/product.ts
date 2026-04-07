@@ -4,6 +4,7 @@ export interface ProductImageItem {
 }
 
 
+
 export interface Product {
   id: number;
   name: string;
@@ -15,4 +16,7 @@ export interface Product {
   size: string;
   colors: string[];  
   material: string;
+  subCategory:string; 
+  isFeatured: boolean;
+
 }

@@ -1,18 +1,37 @@
-
+"use client";
 import Image from "next/image";
 import { Star, Heart,Ruler,Palette} from 'lucide-react';
 import Link from 'next/link';
 import { Product } from '@/types/product';
+import { useFavorites } from '@/context/FavoritesContext'
+
 
 export default function ProductCard({ info }: { info: Product }){
+     
+    const { toggleFavorite, isFavorite } = useFavorites();
+    
+    
+    const isFav = isFavorite(info.id)
+
+
     return(
         <div className="relative bg-bg-[#0a0f1e] rounded-[24px] border border-gray-800/50 p-4 shadow-2xl group transition-all hover:border-gray-700/50">
+            {info.isFeatured && (
             <div className="absolute top-4 left-4 z-10 flex items-center gap-1.5 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg ">
                 <Star className="w-3 h-3 fill-white" /> DESTACADO
             </div>
+            )}
 
-            <button className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10 text-gray-400 hover:text-red-500 transition-colors">
-                <Heart className="w-4 h-4" />
+            <button 
+                onClick={() => toggleFavorite(info)} 
+                className={`absolute top-4 right-4 z-10 p-2 rounded-full backdrop-blur-md border border-white/10 transition-all duration-300 ${
+                    isFav 
+                    ? 'bg-red-500/20 text-red-500 border-red-500/50' 
+                    : 'bg-black/20 text-gray-400 hover:text-red-500' 
+                }`}
+            >
+                <Heart className={`w-4 h-4 ${isFav ? 'fill-red-500' : ''}`} />
+
             </button>
 
             <div className="relative w-full aspect-[4/4] rounded-[20px] overflow-hidden mb-4 border border-gray-800/40">
