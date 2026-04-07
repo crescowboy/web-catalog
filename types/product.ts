@@ -18,4 +18,5 @@ export interface Product {
   material: string;
   subCategory:string; 
   isFeatured: boolean;
+
 }

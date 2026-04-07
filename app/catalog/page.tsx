@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { featuredProducts } from '@/data/products'; 
-import ProductCard from '@/components/ProductCard';
+import ProductCard from '@/components/products/ProductCard';
+
 
 export default function CatalogPage() {
   const [searchTerm, setSearchTerm] = useState(''); 

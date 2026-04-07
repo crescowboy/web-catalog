@@ -7,8 +7,9 @@ import { notFound } from 'next/navigation';
 import { featuredProducts } from '@/data/products';
 import ProductImage from '@/components/products/ProductImage';
 import { CONTACT_CONFIG } from '@/components/constants';
-import { useFavorites } from '@/context/FavoritesContext'
+import { useFavorites } from '@/context/FavoritesContext';
 import RelatedProductCard from '@/components/products/RelatedProductCard';
+
 
 interface PageProps {
   params: { id: string }; 
@@ -50,6 +51,7 @@ export default function ProductDetailPage({ params }: PageProps) {
         <span>/</span>
         <span className="text-orange-400 font-medium">{product.name}</span>
       </nav>
+
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
       
@@ -132,7 +134,7 @@ export default function ProductDetailPage({ params }: PageProps) {
             <span className="text-xl">💬</span>
                 Contactar por WhatsApp
           </Link>
-          
+
           <button 
             onClick={() => toggleFavorite(product)} 
             className={`w-full py-4 rounded-xl font-bold border flex items-center justify-center gap-2 transition-all shadow-lg ${
@@ -145,6 +147,7 @@ export default function ProductDetailPage({ params }: PageProps) {
               {isFav ? '❤️' : '♡'}
             </span>
               {isFav ? 'Quitar de favoritos' : 'Añadir a favoritos'}
+
           </button>
           
           <Link href="/catalog" className="text-center text-gray-400 text-sm hover:text-white transition-colors py-2">
@@ -169,9 +172,9 @@ export default function ProductDetailPage({ params }: PageProps) {
                   Tiempo de producción: 2-5 días hábiles
               </li>
             </ul>
-          </div>
-        </div>
-        </div>
+           </div>
+         </div>
+       </div>
       </div>
 
       {relatedProducts.length > 0 && (

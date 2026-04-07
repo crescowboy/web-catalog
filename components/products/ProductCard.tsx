@@ -31,6 +31,7 @@ export default function ProductCard({ info }: { info: Product }){
                 }`}
             >
                 <Heart className={`w-4 h-4 ${isFav ? 'fill-red-500' : ''}`} />
+
             </button>
 
             <div className="relative w-full aspect-[4/4] rounded-[20px] overflow-hidden mb-4 border border-gray-800/40">

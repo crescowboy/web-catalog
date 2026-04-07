@@ -1,4 +1,3 @@
-
 import { Product } from '@/types/product'
 
 export const featuredProducts : Product[] = [
@@ -54,7 +53,7 @@ export const featuredProducts : Product[] = [
             {id: "sasuke-2", url:"https://res.cloudinary.com/dowfnegc1/image/upload/v1775253057/catalog-products/sasuke_perfil_derecho_hwhm88.png"},
             {id: "sasuke-3", url:"https://res.cloudinary.com/dowfnegc1/image/upload/v1775253062/catalog-products/sasuke_perfil_izquierdo_c21do1.png"},
             {id: "sasuke-4", url:"https://res.cloudinary.com/dowfnegc1/image/upload/v1775253058/catalog-products/sasuke_perfil_dorsal_pernvv.png"}
-    ],
+         ],
         size: "16 cm",
         colors:["Azul Marino", "Blanco", "Gris", "Morado"],
         material:"PLA" ,
@@ -119,5 +118,4 @@ export const featuredProducts : Product[] = [
         isFeatured: false
     }
     
-
 ]
